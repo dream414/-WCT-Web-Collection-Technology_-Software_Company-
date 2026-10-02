@@ -13,7 +13,7 @@ const WhyWCT = () => {
       number: "01",
       title: "Field-Tested, Not Theoretical",
       description:
-        "Every GIS deliverable is backed by real drone and field data — not desktop assumptions.",
+        "Every GIS deliverable is backend by real drone and field data — not desktop assumptions.",
       type: "drone",
       accent: "cyan",
       side: "left",
