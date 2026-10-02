@@ -13,7 +13,7 @@ export default function About() {
   const bottomBoxes = [
     {
       img: "/MAP4.jpg",
-      text: "Anas Ali Marketing Manager at Web Collection Marketing Expert With 12 years of Experience",
+      text: "Anas Ali Marketing Manager at Web Collection Marketing Expert With in 12 years of Experience",
     },
     {
       img: "/MAP5.jpg",
