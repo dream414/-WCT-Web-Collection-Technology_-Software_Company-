@@ -1,9 +1,62 @@
-import { useState } from "react";
+
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import myVideo from "../assets/wct.mp4";
 
 const HeroSectionSingleRotate = () => {
   const [showVideo, setShowVideo] = useState(false);
+  const videoRef = useRef(null);
+
+  const openVideo = () => {
+    setShowVideo(true);
+  };
+
+  const closeVideo = () => {
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
+
+    setShowVideo(false);
+  };
+
+  useEffect(() => {
+    if (!showVideo || !videoRef.current) return;
+
+    const video = videoRef.current;
+
+    // Start every time from the beginning
+    video.currentTime = 0;
+
+    // Make sure the video is NOT muted
+    video.muted = false;
+    video.volume = 1;
+
+    // Try autoplay with sound
+    const playVideo = async () => {
+      try {
+        await video.play();
+      } catch (error) {
+        // Browser may block autoplay with sound.
+        // User can press Play manually.
+        console.log("Autoplay with sound was blocked by the browser.");
+      }
+    };
+
+    // Wait until video is mounted and ready
+    if (video.readyState >= 2) {
+      playVideo();
+    } else {
+      video.addEventListener("canplay", playVideo, { once: true });
+    }
+
+    return () => {
+      video.removeEventListener("canplay", playVideo);
+
+      video.pause();
+      video.currentTime = 0;
+    };
+  }, [showVideo]);
 
   return (
     <>
@@ -44,7 +97,6 @@ const HeroSectionSingleRotate = () => {
             LEFT CONTENT
         ====================================================== */}
         <div className="relative md:w-1/2 text-center md:text-left space-y-6 z-10 mb-14">
-
           <button className="px-6 py-2 bg-blue-500/30 border-2 border-blue-500 text-[15px] text-white font-semibold rounded-full shadow-lg mt-4">
             Web Collection Technology
           </button>
@@ -65,7 +117,7 @@ const HeroSectionSingleRotate = () => {
               VIEW BUTTON
           ====================================================== */}
           <button
-            onClick={() => setShowVideo(true)}
+            onClick={openVideo}
             className="
               relative
               px-10
@@ -92,9 +144,7 @@ const HeroSectionSingleRotate = () => {
 
             <span className="absolute inset-[2px] rounded-2xl bg-black/30"></span>
 
-            <span className="relative z-10">
-              View
-            </span>
+            <span className="relative z-10">View</span>
 
             <style>{`
               @keyframes moveColor {
@@ -114,7 +164,6 @@ const HeroSectionSingleRotate = () => {
             RIGHT EARTH + ORBIT
         ====================================================== */}
         <div className="relative md:w-1/2 flex justify-center items-center mt-14 md:mt-0 z-10">
-
           {/* MAIN CONTAINER */}
           <div
             className="
@@ -128,7 +177,6 @@ const HeroSectionSingleRotate = () => {
               justify-center
             "
           >
-
             {/* =================================================
                 OUTER SILVER LINE
                 BLUE BALL MOVES HERE
@@ -174,7 +222,7 @@ const HeroSectionSingleRotate = () => {
                 z-40
               "
               style={{
-                animation: "spinEarth  30s linear infinite",
+                animation: "spinEarth 30s linear infinite",
               }}
             />
 
@@ -285,7 +333,6 @@ const HeroSectionSingleRotate = () => {
                 z-10
               "
             ></div>
-
           </div>
         </div>
 
@@ -293,7 +340,6 @@ const HeroSectionSingleRotate = () => {
             ANIMATIONS
         ====================================================== */}
         <style>{`
-
           /* EARTH ROTATION */
           @keyframes spinEarth {
             from {
@@ -349,7 +395,6 @@ const HeroSectionSingleRotate = () => {
             box-shadow:
               0 0 40px 15px rgba(0, 200, 255, 0.5);
           }
-
         `}</style>
       </section>
 
@@ -357,13 +402,17 @@ const HeroSectionSingleRotate = () => {
           VIDEO MODAL
       ====================================================== */}
       {showVideo && (
-        <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-50 px-4">
-
-          <div className="relative w-full max-w-5xl">
-
+        <div
+          className="fixed inset-0 bg-black/90 flex items-center justify-center z-50 px-4"
+          onClick={closeVideo}
+        >
+          <div
+            className="relative w-full max-w-5xl"
+            onClick={(e) => e.stopPropagation()}
+          >
             {/* CLOSE BUTTON */}
             <button
-              onClick={() => setShowVideo(false)}
+              onClick={closeVideo}
               className="
                 absolute
                 -top-12
@@ -407,16 +456,19 @@ const HeroSectionSingleRotate = () => {
                 backgroundSize: "300% 300%",
               }}
             >
-
-              {/* VIDEO BOX */}
+              {/* =================================================
+                  VIDEO BOX
+              ================================================= */}
               <div className="bg-black rounded-3xl overflow-hidden shadow-[0_0_40px_rgba(0,155,255,0.6)]">
-
                 <video
+                  ref={videoRef}
+                  key={showVideo ? "video-open" : "video-closed"}
                   controls
-                  autoPlay
-                  muted
                   playsInline
-                  className="w-full h-[480px] object-cover bg-black"
+                  preload="auto"
+                  muted={false}
+                  volume={1}
+                  className="w-full h-[580px] object-cover bg-black"
                 >
                   <source
                     src={myVideo}
@@ -425,7 +477,6 @@ const HeroSectionSingleRotate = () => {
 
                   Your browser does not support the video tag.
                 </video>
-
               </div>
             </motion.div>
           </div>

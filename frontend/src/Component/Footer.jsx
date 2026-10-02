@@ -28,7 +28,7 @@ export default function Footer() {
     setLoading(true);
 
     try {
-      await axios.post("http://localhost:5000/send-email", {
+      await axios.post("https://wct-backend-zqoq.onrender.com/send-email",  {
         name: "Subscriber",
         email: subscribeEmail,
         phone: "-",
