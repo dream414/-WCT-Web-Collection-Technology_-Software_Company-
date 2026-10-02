@@ -17,7 +17,7 @@ export default function About() {
     },
     {
       img: "/MAP5.jpg",
-      text: "Rashid Iqbal: Tech Expert at Web Collection. Full stack and block chain Developer With in 13 years of Experience in Development",
+      text: "Rashid Iqbal: Tech Expert at Web Collection. Fullstack and block chain Developer With in 13 years of Experience in Development",
     },
     {
       img: "/MAP8.jpg",
