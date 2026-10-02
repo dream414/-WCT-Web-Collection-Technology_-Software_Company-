@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 const stats = [
   { value: "500+", label: "Global Clients" },
   { value: "95%", label: "Success Rate" },
-  { value: "24/7", label: "Expert Support" },
+  { value: "24/7", label: "Experts Support" },
   { value: "5+", label: "Years Experience" },
 ];
 
