@@ -33,7 +33,7 @@ export default function Footer() {
         email: subscribeEmail,
         phone: "-",
         projectType: "Newsletter",
-        message: "Subscribed from footer",
+        message: "Subscribed from Footer",
       });
 
       alert("Subscribed successfully!");
