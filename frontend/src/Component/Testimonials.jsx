@@ -7,7 +7,7 @@ export default function Testimonials() {
       text: "Accurate, fast, and professional web solutions from frontend UI to backend functionality. Sadaqat built us a scalable and user-friendly web app. His communication was smooth, and he went the extra mile to ensure we got exactly what we needed.",
       author: "- Tech Startup Client",
       image: "/A.png",
-      imageText: "Anus Ali",
+      imageText: "Ans Ali",
       imageText2: "Spark Code Group of Companies",
     },
 
